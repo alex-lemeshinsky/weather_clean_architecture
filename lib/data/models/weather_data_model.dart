@@ -5,7 +5,7 @@ import 'package:weather_clean_architecture/domain/entities/weather_data.dart';
 class WeatherDataModel {
   final double temp;
   final double windSpeed;
-  final double windDeg;
+  final int windDeg;
   final String description;
   final String icon;
   final int dateTime;

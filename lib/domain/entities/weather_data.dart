@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class WeatherData extends Equatable {
   final double temp;
   final double windSpeed;
-  final double windDeg;
+  final int windDeg;
   final IconData icon;
   final DateTime dateTime;
 
