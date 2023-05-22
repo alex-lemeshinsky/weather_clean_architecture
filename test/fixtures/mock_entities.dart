@@ -6,15 +6,15 @@ import 'package:weather_clean_architecture/domain/entities/weather_data.dart';
 import 'package:weather_icons/weather_icons.dart';
 
 const mockCity = City(
-  name: 'San Francisco',
+  name: "San Francisco",
   coords: LatLng(lat: 37.7749, lng: -122.4194),
 );
 
 final mockWeatherData = WeatherData(
-  temp: 1,
-  windSpeed: 1,
-  windDeg: 1,
-  description: "description",
+  temp: 25,
+  windSpeed: 3.5,
+  windDeg: 90,
+  description: "Cloudy",
   icon: WeatherIcons.day_sunny,
   dateTime: DateTime.fromMillisecondsSinceEpoch(500, isUtc: true),
 );
@@ -22,8 +22,20 @@ final mockWeatherData = WeatherData(
 final mockWeather = Weather(
   city: mockCity,
   currentWeather: mockWeatherData,
-  hourlyForecast: [mockWeatherData],
-  dailyForecast: [mockWeatherData],
+  hourlyForecast: [
+    mockWeatherData,
+    mockWeatherData,
+    mockWeatherData,
+    mockWeatherData,
+    mockWeatherData,
+  ],
+  dailyForecast: [
+    mockWeatherData,
+    mockWeatherData,
+    mockWeatherData,
+    mockWeatherData,
+    mockWeatherData,
+  ],
 );
 
 const mockPosition = Position(
