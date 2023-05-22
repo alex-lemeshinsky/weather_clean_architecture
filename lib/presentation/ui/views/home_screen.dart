@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:vector_math/vector_math.dart';
 import 'package:weather_clean_architecture/domain/entities/weather_data.dart';
 import 'package:weather_clean_architecture/presentation/ui/view_models/home_viewmodel.dart';
-import 'package:weather_icons/weather_icons.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {

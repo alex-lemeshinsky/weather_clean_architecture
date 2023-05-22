@@ -39,7 +39,6 @@ class RemoteWeatherDataSourceImpl implements RemoteWeatherDataSourceInterface {
     final url = Uri.parse(
       "${_baseUrl}data/3.0/onecall?units=metric&lat=$lat&lon=$lon&appid=$apiKey",
     );
-    print(url);
     final response = await client.get(
       url,
       headers: {"Content-Type": "application/json"},
