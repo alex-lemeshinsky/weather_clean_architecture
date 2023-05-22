@@ -19,6 +19,9 @@ dependencies:
   http: ^0.13.6
   weather_icons: ^3.0.0
   equatable: ^2.0.5
+  dynamic_color: ^1.6.5
+  intl: ^0.18.1
+  vector_math: ^2.1.4
 
 dev_dependencies:
   flutter_test:
