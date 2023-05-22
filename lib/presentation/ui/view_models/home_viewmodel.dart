@@ -9,8 +9,9 @@ import 'package:weather_clean_architecture/foundation/data/weather_repository_in
 
 class HomeViewModel with ChangeNotifier {
   final WeatherRepositoryInterface _repository;
+  final GeolocatorPlatform _geolocatorPlatform;
 
-  HomeViewModel(this._repository);
+  HomeViewModel(this._repository, this._geolocatorPlatform);
 
   Weather? _weather;
   String? _errorMessage;
@@ -48,14 +49,14 @@ class HomeViewModel with ChangeNotifier {
     bool serviceEnabled;
     LocationPermission permission;
 
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    serviceEnabled = await _geolocatorPlatform.isLocationServiceEnabled();
     if (!serviceEnabled) {
       throw LocationServicesException();
     }
 
-    permission = await Geolocator.checkPermission();
+    permission = await _geolocatorPlatform.checkPermission();
     if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
+      permission = await _geolocatorPlatform.requestPermission();
       if (permission == LocationPermission.denied) {
         throw LocationPermissionsException();
       }
@@ -65,6 +66,6 @@ class HomeViewModel with ChangeNotifier {
       throw LocationPermissionsException();
     }
 
-    return await Geolocator.getCurrentPosition();
+    return await _geolocatorPlatform.getCurrentPosition();
   }
 }

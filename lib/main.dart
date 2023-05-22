@@ -1,6 +1,7 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_clean_architecture/presentation/ui/view_models/home_viewmodel.dart';
@@ -24,7 +25,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => HomeViewModel(GetIt.instance()),
+          create: (_) => HomeViewModel(
+            GetIt.instance(),
+            GeolocatorPlatform.instance,
+          ),
         ),
       ],
       child: DynamicColorBuilder(
