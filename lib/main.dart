@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
@@ -33,19 +35,35 @@ class MyApp extends StatelessWidget {
       ],
       child: DynamicColorBuilder(
         builder: (lightColorScheme, darkColorScheme) {
-          return MaterialApp.router(
-            title: "Weather app",
-            theme: FlexThemeData.light(
-              colorScheme: lightColorScheme,
-              useMaterial3: true,
-            ),
-            darkTheme: FlexThemeData.dark(
-              colorScheme: darkColorScheme,
-              useMaterial3: true,
-            ),
-            themeMode: ThemeMode.system,
-            routerConfig: _appRouter.config(),
-          );
+          if (Platform.isAndroid) {
+            return MaterialApp.router(
+              title: "Weather app",
+              theme: FlexThemeData.light(
+                colorScheme: lightColorScheme,
+                useMaterial3: true,
+              ),
+              darkTheme: FlexThemeData.dark(
+                colorScheme: darkColorScheme,
+                useMaterial3: true,
+              ),
+              themeMode: ThemeMode.system,
+              routerConfig: _appRouter.config(),
+            );
+          } else {
+            return MaterialApp.router(
+              title: "Weather app",
+              theme: FlexThemeData.light(
+                scheme: FlexScheme.blueM3,
+                useMaterial3: true,
+              ),
+              darkTheme: FlexThemeData.dark(
+                scheme: FlexScheme.blueM3,
+                useMaterial3: true,
+              ),
+              themeMode: ThemeMode.system,
+              routerConfig: _appRouter.config(),
+            );
+          }
         },
       ),
     );
