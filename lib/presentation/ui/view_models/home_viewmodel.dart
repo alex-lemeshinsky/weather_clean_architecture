@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:weather_clean_architecture/application/config/const.dart';
 import 'package:weather_clean_architecture/domain/entities/city.dart';
 import 'package:weather_clean_architecture/domain/entities/latlng.dart';
 import 'package:weather_clean_architecture/domain/entities/weather.dart';
@@ -35,12 +36,11 @@ class HomeViewModel with ChangeNotifier {
         LatLng(lat: userPosition.latitude, lng: userPosition.longitude),
       );
     } on LocationServicesException {
-      _errorMessage = "Location services are disabled";
+      _errorMessage = locationServicesExceptionMessage;
     } on LocationPermissionsException {
-      _errorMessage = "Location permissions were not granted";
+      _errorMessage = locationPermissionsExceptionMessage;
     } on ServerException {
-      _errorMessage =
-          "Could not get data from the internet, check your internet connection";
+      _errorMessage = serverExceptionMessage;
     }
     notifyListeners();
   }
