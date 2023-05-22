@@ -3,8 +3,8 @@ import 'package:weather_clean_architecture/application/config/const.dart';
 import 'package:weather_clean_architecture/domain/entities/weather_data.dart';
 
 class WeatherDataModel {
-  final double temp;
-  final double windSpeed;
+  final num temp;
+  final num windSpeed;
   final int windDeg;
   final String description;
   final String icon;
@@ -24,19 +24,31 @@ class WeatherDataModel {
       temp: json["temp"],
       windSpeed: json["wind_speed"],
       windDeg: json["wind_deg"],
-      description: json["weather"]["main"],
-      icon: json["weather"]["icon"],
+      description: json["weather"][0]["main"],
+      icon: json["weather"][0]["icon"],
+      dateTime: json["dt"],
+    );
+  }
+
+  factory WeatherDataModel.fromDailyForecastJson(Map<String, dynamic> json) {
+    return WeatherDataModel(
+      temp: json["temp"]["max"],
+      windSpeed: json["wind_speed"],
+      windDeg: json["wind_deg"],
+      description: json["weather"][0]["main"],
+      icon: json["weather"][0]["icon"],
       dateTime: json["dt"],
     );
   }
 
   WeatherData toDomain() {
     return WeatherData(
-      temp: temp,
-      windSpeed: windSpeed,
+      temp: temp.toDouble(),
+      windSpeed: windSpeed.toDouble(),
       windDeg: windDeg,
+      description: description,
       icon: weatherIcons[icon] ?? Icons.question_mark,
-      dateTime: DateTime.fromMillisecondsSinceEpoch(dateTime),
+      dateTime: DateTime.fromMillisecondsSinceEpoch(dateTime * 1000),
     );
   }
 }

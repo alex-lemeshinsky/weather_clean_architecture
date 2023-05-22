@@ -5,6 +5,7 @@ class WeatherData extends Equatable {
   final double temp;
   final double windSpeed;
   final int windDeg;
+  final String description;
   final IconData icon;
   final DateTime dateTime;
 
@@ -12,6 +13,7 @@ class WeatherData extends Equatable {
     required this.temp,
     required this.windSpeed,
     required this.windDeg,
+    required this.description,
     required this.icon,
     required this.dateTime,
   });

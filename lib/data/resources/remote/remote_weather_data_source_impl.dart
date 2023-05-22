@@ -37,7 +37,7 @@ class RemoteWeatherDataSourceImpl implements RemoteWeatherDataSourceInterface {
   @override
   Future<WeatherModel> getWeatherData(double lat, double lon) async {
     final url = Uri.parse(
-      "${_baseUrl}data/3.0/onecall?lat=$lat&lon=$lon&appid=$apiKey",
+      "${_baseUrl}data/3.0/onecall?units=metric&lat=$lat&lon=$lon&appid=$apiKey",
     );
     final response = await client.get(
       url,
@@ -50,15 +50,16 @@ class RemoteWeatherDataSourceImpl implements RemoteWeatherDataSourceInterface {
 
     final jsonData = jsonDecode(response.body);
     final currentWeatherJson = jsonData["current"];
-    final hourlyForecastJson = (jsonData["hourly"] as List).sublist(0, 4);
-    final dailyForecastJson = (jsonData["daily"] as List).sublist(0, 4);
+    final hourlyForecastJson = (jsonData["hourly"] as List).sublist(1, 5);
+    final dailyForecastJson = (jsonData["daily"] as List).sublist(1, 5);
 
     return WeatherModel(
       currentWeather: WeatherDataModel.fromJson(currentWeatherJson),
       hourlyForecast:
           hourlyForecastJson.map((e) => WeatherDataModel.fromJson(e)).toList(),
-      dailyForecast:
-          dailyForecastJson.map((e) => WeatherDataModel.fromJson(e)).toList(),
+      dailyForecast: dailyForecastJson
+          .map((e) => WeatherDataModel.fromDailyForecastJson(e))
+          .toList(),
     );
   }
 }
