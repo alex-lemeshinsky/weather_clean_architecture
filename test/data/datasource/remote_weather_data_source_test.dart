@@ -4,6 +4,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:weather_clean_architecture/data/resources/remote/remote_weather_data_source_impl.dart';
 import 'package:weather_clean_architecture/foundation/core/exceptions.dart';
 
+import '../../fixtures/fixture_names.dart';
 import '../../fixtures/fixture_reader.dart';
 
 class MockRequest extends Mock implements http.Request {}
@@ -28,8 +29,7 @@ void main() {
             headers: {"Content-Type": "application/json"},
           ),
         ).thenAnswer(
-          (_) async =>
-              http.Response(fixture("reverse_geocoding_response.json"), 200),
+          (_) async => http.Response(fixture(reverseGeocoding), 200),
         );
 
         final cityModel =
@@ -50,7 +50,7 @@ void main() {
             headers: {"Content-Type": "application/json"},
           ),
         ).thenAnswer(
-          (_) async => http.Response(fixture("onecall_api_response.json"), 200),
+          (_) async => http.Response(fixture(onecallFixture), 200),
         );
 
         final weatherModel = await remoteWeatherDataSource.getWeatherData(
