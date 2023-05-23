@@ -23,3 +23,8 @@ Map<String, IconData> weatherIcons = {
   "50d": WeatherIcons.fog,
   "50n": WeatherIcons.fog,
 };
+
+const String locationServicesExceptionMessage =
+    "Location services are disabled";
+const String locationPermissionsExceptionMessage="Location permissions were not granted";
+const String serverExceptionMessage = "Could not get data from the internet, check your internet connection";

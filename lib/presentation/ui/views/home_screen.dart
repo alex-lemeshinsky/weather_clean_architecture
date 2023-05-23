@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:vector_math/vector_math.dart';
 import 'package:weather_clean_architecture/domain/entities/weather_data.dart';
 import 'package:weather_clean_architecture/presentation/ui/view_models/home_viewmodel.dart';
-import 'package:weather_icons/weather_icons.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -95,23 +94,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           const Spacer(),
                           ...model.hourlyForecast
                               .map(
-                                (forecastData) => Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text("${forecastData.temp.round()}°"),
-                                      Icon(
-                                        forecastData.icon,
-                                        size: 18.0,
-                                      ),
-                                      const SizedBox(height: 8.0),
-                                      Text(
-                                        forecastData.dateTime.hour.toString(),
-                                      ),
-                                    ],
-                                  ),
+                                (forecastData) => HourlyForecastWidget(
+                                  forecastData: forecastData,
                                 ),
                               )
                               .toList(),
@@ -127,27 +111,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           children: model.dailyForecast
                               .map(
-                                (WeatherData day) => Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        DateFormat('EEEE').format(day.dateTime),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge,
-                                      ),
-                                      const Spacer(),
-                                      Icon(day.icon, size: 20.0),
-                                      const SizedBox(width: 16.0),
-                                      Text(
-                                        "${day.temp.round()}°",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge,
-                                      ),
-                                    ],
-                                  ),
+                                (WeatherData forecastData) =>
+                                    DailyForecastWidget(
+                                  forecastData: forecastData,
                                 ),
                               )
                               .toList(),
@@ -159,7 +125,14 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             } else if (model.hasError) {
               return Center(
-                child: Text(model.errorMessage!),
+                child: Text(
+                  model.errorMessage!,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(color: Theme.of(context).colorScheme.error),
+                ),
               );
             }
             return const Center(
@@ -170,7 +143,63 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: viewModel.getWeather,
+        tooltip: "Reload",
         child: const Icon(Icons.replay),
+      ),
+    );
+  }
+}
+
+class HourlyForecastWidget extends StatelessWidget {
+  final WeatherData forecastData;
+
+  const HourlyForecastWidget({super.key, required this.forecastData});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("${forecastData.temp.round()}°"),
+          Icon(
+            forecastData.icon,
+            size: 18.0,
+          ),
+          const SizedBox(height: 8.0),
+          Text(
+            forecastData.dateTime.hour.toString(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DailyForecastWidget extends StatelessWidget {
+  final WeatherData forecastData;
+
+  const DailyForecastWidget({super.key, required this.forecastData});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Text(
+            DateFormat('EEEE').format(forecastData.dateTime),
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          const Spacer(),
+          Icon(forecastData.icon, size: 20.0),
+          const SizedBox(width: 16.0),
+          Text(
+            "${forecastData.temp.round()}°",
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+        ],
       ),
     );
   }

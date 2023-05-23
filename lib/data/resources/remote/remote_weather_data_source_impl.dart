@@ -20,10 +20,16 @@ class RemoteWeatherDataSourceImpl implements RemoteWeatherDataSourceInterface {
     final url = Uri.parse(
       "${_baseUrl}geo/1.0/reverse?lat=$lat&lon=$lon&appid=$apiKey",
     );
-    final response = await client.get(
-      url,
-      headers: {"Content-Type": "application/json"},
-    );
+    late final http.Response response;
+
+    try {
+      response = await client.get(
+        url,
+        headers: {"Content-Type": "application/json"},
+      );
+    } catch (e) {
+      throw ServerException();
+    }
 
     if (response.statusCode != 200) {
       throw ServerException();
@@ -39,11 +45,16 @@ class RemoteWeatherDataSourceImpl implements RemoteWeatherDataSourceInterface {
     final url = Uri.parse(
       "${_baseUrl}data/3.0/onecall?units=metric&lat=$lat&lon=$lon&appid=$apiKey",
     );
-    print(url);
-    final response = await client.get(
-      url,
-      headers: {"Content-Type": "application/json"},
-    );
+    late final http.Response response;
+
+    try {
+      response = await client.get(
+        url,
+        headers: {"Content-Type": "application/json"},
+      );
+    } catch (e) {
+      throw ServerException();
+    }
 
     if (response.statusCode != 200) {
       throw ServerException();
