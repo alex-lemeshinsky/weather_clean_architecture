@@ -143,6 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: viewModel.getWeather,
+        tooltip: "Reload",
         child: const Icon(Icons.replay),
       ),
     );
