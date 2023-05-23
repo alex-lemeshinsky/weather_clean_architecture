@@ -17,4 +17,4 @@ The technical test task for Orkester company
 - vector_math for degrees to radians converter
 
 ## Demo
-![Demo](demo.mp4)
+![Demo](demo.gif)
